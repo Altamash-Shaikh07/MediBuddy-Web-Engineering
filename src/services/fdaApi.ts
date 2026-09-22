@@ -28,3 +28,31 @@ export const searchMedicines = async (
 
   return data.results ?? [];
 };
+
+export const getMedicineById = async (
+  id: string,
+  signal?: AbortSignal
+): Promise<Medicine | null> => {
+  const normalizedId = id.trim();
+
+  if (!normalizedId) {
+    return null;
+  }
+
+  const url = new URL(FDA_BASE_URL);
+  url.searchParams.set("search", `id:${normalizedId}`);
+  url.searchParams.set("limit", "1");
+
+  const response = await fetch(url.toString(), { signal });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      return null;
+    }
+
+    throw new Error("Failed to fetch medicine details.");
+  }
+
+  const data = await response.json();
+  return data.results?.[0] ?? null;
+};
