@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  getMedicineById,
-} from "../services/fdaApi";
+// import {
+//   getMedicineById,
+// } from "../services/fdaApi";
 import type { Medicine } from "../types/medicine";
 
 function MedicineDetail() {
@@ -26,11 +26,7 @@ function MedicineDetail() {
 
     const loadMedicine = async () => {
       try {
-        const data = await getMedicineById(
-          id,
-          controller.signal
-        );
-
+        const data = null
         if (!data) {
           setError("Medicine not found.");
           return;
